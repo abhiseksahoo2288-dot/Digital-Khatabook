@@ -51,10 +51,12 @@ export const useAuth = () => {
   const signInWithGoogle = async () => {
     try {
       setLoading(true);
+      console.log('Attempting Google sign in...');
       const result = await signInWithPopup(auth, googleProvider);
-      console.log('Sign in successful:', result.user);
-    } catch (error) {
+      console.log('Sign in successful:', result.user.email);
+    } catch (error: any) {
       console.error('Error signing in with Google:', error);
+      alert(`Sign in failed: ${error.message}`);
       setLoading(false);
     }
   };
