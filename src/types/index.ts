@@ -76,6 +76,12 @@ export interface AddTransactionForm {
   note?: string;
 }
 
+// Form error types
+export interface AddTransactionFormErrors {
+  amount?: string;
+  quantity?: string;
+}
+
 // Filter types
 export interface TransactionFilters {
   dateFrom?: Date;

@@ -7,7 +7,7 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useTransactions } from '@/hooks/useTransactions';
-import { AddTransactionForm as AddTransactionFormType, TransactionType, PaymentMethod } from '@/types';
+import { AddTransactionForm as AddTransactionFormType, AddTransactionFormErrors, TransactionType, PaymentMethod } from '@/types';
 import { X } from 'lucide-react';
 
 interface AddTransactionFormProps {
@@ -32,10 +32,10 @@ export function AddTransactionForm({
     paymentMethod: 'cash',
     note: '',
   });
-  const [errors, setErrors] = useState<Partial<AddTransactionFormType>>({});
+  const [errors, setErrors] = useState<AddTransactionFormErrors>({});
 
   const validateForm = (): boolean => {
-    const newErrors: Partial<AddTransactionFormType> = {};
+    const newErrors: AddTransactionFormErrors = {};
 
     if (!formData.amount || formData.amount <= 0) {
       newErrors.amount = 'Amount must be greater than 0';
@@ -64,7 +64,7 @@ export function AddTransactionForm({
 
   const handleInputChange = (field: keyof AddTransactionFormType, value: any) => {
     setFormData(prev => ({ ...prev, [field]: value }));
-    if (errors[field]) {
+    if (field === 'amount' || field === 'quantity') {
       setErrors(prev => ({ ...prev, [field]: undefined }));
     }
   };
